@@ -24,6 +24,7 @@
 <nav class="tabs">
   <button class="tab active" data-view="mf">IS-LM-BP (Mundell–Fleming)</button>
   <button class="tab" data-view="os">Overshooting (Dornbusch)</button>
+  <button class="tab" data-view="jc">Curva J / Marshall–Lerner</button>
 </nav>
 
 <!-- ===================== MUNDELL–FLEMING ===================== -->
@@ -178,6 +179,69 @@
   </div>
 </section>
 
+<!-- ===================== CURVA J / MARSHALL-LERNER ===================== -->
+<section id="view-jc" class="view">
+  <div class="layout">
+    <div class="panel">
+      <h2>Depreciación y elasticidades</h2>
+
+      <div class="control">
+        <label>Depreciación real \(d\) <span class="val" id="jc-d-v">+10%</span></label>
+        <input type="range" id="jc-d" min="0.02" max="0.4" step="0.01" value="0.1" />
+        <div class="hint">Tamaño de la depreciación en \(t=0\).</div>
+      </div>
+
+      <div class="control">
+        <label>Elasticidad exportaciones \(\eta_x\) <span class="val" id="jc-ex-v">0.80</span></label>
+        <input type="range" id="jc-ex" min="0" max="3" step="0.05" value="0.8" />
+      </div>
+
+      <div class="control">
+        <label>Elasticidad importaciones \(\eta_m\) <span class="val" id="jc-em-v">0.60</span></label>
+        <input type="range" id="jc-em" min="0" max="3" step="0.05" value="0.6" />
+        <div class="hint">Largo plazo. En el corto plazo los volúmenes aún no reaccionan.</div>
+      </div>
+
+      <div class="control">
+        <label>Velocidad de ajuste de volúmenes <span class="val" id="jc-tau-v">2.0</span></label>
+        <input type="range" id="jc-tau" min="0.3" max="6" step="0.1" value="2.0" />
+        <div class="hint">Rezago comercial. \(\eta(t)=\eta_{LP}\,(1-e^{-t/\tau})\).</div>
+      </div>
+
+      <h3>Acciones</h3>
+      <div class="btnrow">
+        <button class="btn" id="jc-preset-ml">Preset: cumple ML</button>
+        <button class="btn" id="jc-preset-noml">Preset: no cumple ML</button>
+      </div>
+      <div class="btnrow">
+        <button class="btn primary" id="jc-reset">Reiniciar</button>
+      </div>
+
+      <div class="note" id="jc-verdict" style="margin-top:16px"></div>
+    </div>
+
+    <div>
+      <div class="readout">
+        <div class="stat"><div class="k">\(\eta_x+\eta_m\)</div><div class="v acc" id="jc-out-sum">1.40</div></div>
+        <div class="stat"><div class="k">Condición M-L</div><div class="v" id="jc-out-ml">Se cumple</div></div>
+        <div class="stat"><div class="k">Impacto \(t=0\)</div><div class="v lm" id="jc-out-impact">−10%</div></div>
+        <div class="stat"><div class="k">Largo plazo</div><div class="v bp" id="jc-out-lr">+4%</div></div>
+      </div>
+
+      <div class="eqbox">
+        <p>$$\text{Marshall–Lerner:}\quad \eta_x + \eta_m > 1 \;\Rightarrow\; \text{la depreciación mejora la balanza comercial}$$</p>
+        <p>$$\Delta TB(t) \;\approx\; \big[\eta_x(t) + \eta_m(t) - 1\big]\, d, \qquad \eta_j(t)=\eta_j\big(1-e^{-t/\tau}\big)$$</p>
+      </div>
+
+      <div class="layout" style="grid-template-columns: 1fr 1fr; gap:16px">
+        <div class="plotwrap"><div id="jc-ml" class="plot"></div></div>
+        <div class="plotwrap"><div id="jc-jcurve" class="plot"></div></div>
+      </div>
+      <div class="note" id="jc-note"></div>
+    </div>
+  </div>
+</section>
+
 <footer>
   Material docente · construido con Plotly.js y MathJax · se ejecuta íntegramente en el navegador (apto para GitHub Pages).
   La notación y los parámetros base replican la <span style="color:var(--accent-2)">Ayudantía 4</span>.
@@ -185,6 +249,7 @@
 
 <script src="js/mundell-fleming.js"></script>
 <script src="js/overshooting.js"></script>
+<script src="js/jcurve.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
