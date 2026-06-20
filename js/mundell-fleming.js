@@ -9,6 +9,8 @@
 const MF = (() => {
   const DEF = { c:0.5, m:0.5, b:1, x:1, k:1, h:1, a:100, T:0,
                 G:50, M:50, ebar:0, istar:0, v:1, regime:'flexible', perfect:false };
+  // Ejes fijos: así los desplazamientos de las curvas se ven, no se "compensan"
+  const XMAX = 250, YMIN = -20, YMAX = 150;
   let frozen = null;
 
   const $ = id => document.getElementById(id);
@@ -78,8 +80,7 @@ const MF = (() => {
   function draw() {
     const p = readParams();
     const eq = solve(p);
-    const Ymax = Math.max(200, eq.Y * 1.7);
-    const c = curves(p, eq, Ymax);
+    const c = curves(p, eq, XMAX);
 
     const T = (xs, ys, name, color, dash) => ({
       x: xs, y: ys, mode: 'lines', name,
@@ -111,8 +112,8 @@ const MF = (() => {
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
       font: { color: '#cdd8e3' },
       margin: { l: 55, r: 18, t: 10, b: 48 },
-      xaxis: { title: 'Producto  Y', gridcolor: '#2c3a49', zeroline: false, range: [0, Ymax] },
-      yaxis: { title: 'Tasa de interés  i', gridcolor: '#2c3a49', zeroline: true, zerolinecolor: '#3a4a5a' },
+      xaxis: { title: 'Producto  Y', gridcolor: '#2c3a49', zeroline: false, range: [0, XMAX], autorange: false },
+      yaxis: { title: 'Tasa de interés  i', gridcolor: '#2c3a49', zeroline: true, zerolinecolor: '#3a4a5a', range: [YMIN, YMAX], autorange: false },
       legend: { orientation: 'h', y: 1.08, x: 0, font: { size: 12 } },
       shapes: [
         { type: 'line', x0: eq.Y, x1: eq.Y, y0: 0, y1: eq.i, line: { color: '#ffffff', width: 1, dash: 'dot' } },
@@ -136,8 +137,7 @@ const MF = (() => {
 
   function freeze() {
     const p = readParams(), eq = solve(p);
-    const Ymax = Math.max(200, eq.Y * 1.7);
-    const c = curves(p, eq, Ymax);
+    const c = curves(p, eq, XMAX);
     frozen = { ...c, eq };
     draw();
   }
