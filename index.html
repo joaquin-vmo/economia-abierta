@@ -18,7 +18,7 @@
 
 <header>
   <h1>Laboratorio de Finanzas Internacionales</h1>
-  <p><span class="course">Magíster en Análisis Económico — Finanzas Internacionales, Otoño 2026</span> · Modelo IS-LM-BP de economía abierta (Mundell–Fleming) y <em>overshooting</em> de Dornbusch. Mueve los controles y observa el ajuste.</p>
+  <p><span class="course">Finanzas Internacionales — Magíster en Análisis Económico</span></p>
 </header>
 
 <nav class="tabs">
@@ -39,7 +39,7 @@
           <button data-r="flexible" class="active">Flexible</button>
           <button data-r="fijo">Fijo</button>
         </div>
-        <div class="hint" id="mf-regime-hint">Flexible: \(M/P\) es exógena y \(e\) se ajusta. Fijo: \(\bar e\) es exógeno y \(M/P\) (reservas) se ajusta.</div>
+        <div class="hint" id="mf-regime-hint">Flexible: \(e\) se ajusta. Fijo: \(M/P\) (reservas) se ajusta.</div>
       </div>
 
       <div class="control">
@@ -65,7 +65,7 @@
       <div class="control">
         <label>Movilidad de capital \(v\) <span class="val" id="mf-v-v">1.0</span></label>
         <input type="range" id="mf-v" min="-1.3" max="2" step="0.02" value="0" />
-        <div class="hint">Pendiente de BP. \(v\to\infty\): movilidad perfecta (BP horizontal en \(i^*\)). \(v\to0\): inmóvil (BP vertical).</div>
+        <div class="hint">\(v\to\infty\): BP horizontal. \(v\to0\): BP vertical.</div>
       </div>
       <div class="control">
         <label style="cursor:pointer"><input type="checkbox" id="mf-perfect" /> &nbsp;Movilidad perfecta (\(v\to\infty\))</label>
@@ -126,19 +126,18 @@
       <div class="control">
         <label>Expansión monetaria \(\Delta m\) <span class="val" id="os-dm-v">+5%</span></label>
         <input type="range" id="os-dm" min="0" max="0.4" step="0.01" value="0.05" />
-        <div class="hint">Aumento permanente (en logs) de la oferta monetaria en \(t=0\).</div>
       </div>
 
       <div class="control">
         <label>Semielasticidad interés \(\lambda\) <span class="val" id="os-lam-v">1.0</span></label>
         <input type="range" id="os-lam" min="0.3" max="3" step="0.05" value="1.0" />
-        <div class="hint">\(m-p=\phi y-\lambda i\). Menor \(\lambda\) ⇒ mayor sobrerreacción.</div>
+        <div class="hint">Menor \(\lambda\) ⇒ mayor sobrerreacción.</div>
       </div>
 
       <div class="control">
         <label>Velocidad de ajuste de precios \(\pi\) <span class="val" id="os-pi-v">0.25</span></label>
         <input type="range" id="os-pi" min="0.05" max="8" step="0.05" value="0.25" />
-        <div class="hint">\(\pi\to\infty\): precios flexibles ⇒ <b>sin</b> overshooting.</div>
+        <div class="hint">\(\pi\to\infty\): precios flexibles ⇒ sin overshooting.</div>
       </div>
 
       <details>
@@ -188,7 +187,6 @@
       <div class="control">
         <label>Depreciación real \(d\) <span class="val" id="jc-d-v">+10%</span></label>
         <input type="range" id="jc-d" min="0.02" max="0.4" step="0.01" value="0.1" />
-        <div class="hint">Tamaño de la depreciación en \(t=0\).</div>
       </div>
 
       <div class="control">
@@ -199,13 +197,12 @@
       <div class="control">
         <label>Elasticidad importaciones \(\eta_m\) <span class="val" id="jc-em-v">0.60</span></label>
         <input type="range" id="jc-em" min="0" max="3" step="0.05" value="0.6" />
-        <div class="hint">Largo plazo. En el corto plazo los volúmenes aún no reaccionan.</div>
+        <div class="hint">Elasticidades de largo plazo.</div>
       </div>
 
       <div class="control">
         <label>Velocidad de ajuste de volúmenes <span class="val" id="jc-tau-v">2.0</span></label>
         <input type="range" id="jc-tau" min="0.3" max="6" step="0.1" value="2.0" />
-        <div class="hint">Rezago comercial. \(\eta(t)=\eta_{LP}\,(1-e^{-t/\tau})\).</div>
       </div>
 
       <h3>Acciones</h3>
@@ -243,8 +240,7 @@
 </section>
 
 <footer>
-  Material docente · construido con Plotly.js y MathJax · se ejecuta íntegramente en el navegador (apto para GitHub Pages).
-  La notación y los parámetros base replican la <span style="color:var(--accent-2)">Ayudantía 4</span>.
+  Material docente · notación y parámetros base de la Ayudantía 4.
 </footer>
 
 <script src="js/mundell-fleming.js"></script>

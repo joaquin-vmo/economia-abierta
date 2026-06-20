@@ -109,9 +109,8 @@ const JC = (() => {
       : `<b>η_x + η_m = ${sum.toFixed(2)} &lt; 1</b>: <span style="color:var(--lm)">no</span> se cumple Marshall–Lerner. La depreciación empeora la balanza incluso en el largo plazo: no hay curva J, solo deterioro.`;
 
     $('jc-note').innerHTML =
-      'En el corto plazo los volúmenes de comercio están fijos (contratos y rezagos), pero la depreciación encarece de inmediato las importaciones: ' +
-      'el valor de la balanza <b>empeora</b>. A medida que las cantidades reaccionan (suben exportaciones, bajan importaciones), la balanza se recupera. ' +
-      'Conecta con la Ayudantía 4 (inciso b): por esto una depreciación <b>no</b> mejora la balanza de inmediato, y la curva IS puede <b>no</b> desplazarse a la derecha en el muy corto plazo.';
+      'Al impacto los volúmenes están fijos y la depreciación encarece las importaciones: la balanza <b>empeora</b>. ' +
+      'Cuando las cantidades reaccionan, se recupera. Por esto una depreciación no mejora la balanza de inmediato (Ayudantía 4, inciso b).';
     if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([$('jc-verdict'), $('jc-note')]);
   }
 

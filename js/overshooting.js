@@ -215,10 +215,8 @@ const OS = (() => {
       (M.ratio > 1.05 ? '→ <span style="color:var(--accent-2)">el tipo de cambio se pasa de su nivel final</span>'
                       : '→ <span style="color:var(--good)">prácticamente sin sobrerreacción</span>');
     $('os-note').innerHTML =
-      'Una expansión monetaria sube \\(p\\) y \\(e\\) uno a uno en el <b>largo plazo</b> (neutralidad). ' +
-      'Pero \\(p\\) es <b>rígido</b> y no salta: en \\(t=0\\) baja \\(i\\) y, por la PDI \\(\\dot e=i-i^*\\), ' +
-      'el tipo de cambio salta <b>por encima</b> de su nuevo nivel (A→B) para luego apreciarse hacia C (overshooting). ' +
-      'Sube \\(\\pi\\) (precios flexibles) y la sobrerreacción desaparece.';
+      'Como \\(p\\) es rígido, en \\(t=0\\) baja \\(i\\) y el tipo de cambio salta <b>por encima</b> de su nuevo nivel (A→B) ' +
+      'para luego apreciarse hacia C: eso es el overshooting. Con precios flexibles (\\(\\pi\\) alto) desaparece.';
     if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([$('os-note'), $('os-metric')]);
   }
 

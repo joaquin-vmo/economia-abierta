@@ -67,17 +67,12 @@ const MF = (() => {
 
   function explain(p, eq) {
     const hi = p.perfect || p.v >= 12;
-    const lo = p.v <= 0.12;
-    let mob = hi ? 'alta (BP casi horizontal)' : lo ? 'baja (BP casi vertical)' : 'imperfecta';
-    let msg;
     if (p.regime === 'flexible') {
-      if (hi) msg = '<b>Flexible + movilidad alta:</b> la política <b>monetaria es efectiva</b> (↑M⇒↓i⇒salida de capitales⇒depreciación⇒↑XN⇒↑Y); la <b>fiscal se anula</b> por apreciación del tipo de cambio que desplaza la IS de vuelta. La tasa local regresa a \\(i^*\\).';
-      else msg = '<b>Flexible + movilidad imperfecta:</b> tanto la política monetaria como la fiscal mueven el producto; el tipo de cambio \\(e\\) ajusta endógenamente para equilibrar la balanza de pagos.';
-    } else {
-      if (hi) msg = '<b>Fijo + movilidad alta:</b> la política <b>fiscal es efectiva</b> (↑G⇒↑i⇒entrada de capitales⇒el banco central compra divisas y expande M⇒LM a la derecha); la <b>monetaria es inefectiva</b> (defender \\(\\bar e\\) revierte la expansión vía pérdida de reservas).';
-      else msg = '<b>Fijo + movilidad imperfecta:</b> al fijar \\(\\bar e\\), la oferta monetaria \\(M/P\\) es endógena (varían las reservas) para sostener el tipo de cambio.';
+      if (hi) return 'Flexible + movilidad alta: la política <b>monetaria es efectiva</b>; la <b>fiscal se anula</b> por apreciación.';
+      return 'Flexible + movilidad imperfecta: \\(e\\) se ajusta para equilibrar la balanza de pagos.';
     }
-    return `Movilidad de capital: <b>${mob}</b>. ${msg}`;
+    if (hi) return 'Fijo + movilidad alta: la política <b>fiscal es efectiva</b>; la <b>monetaria es inefectiva</b> (pérdida de reservas).';
+    return 'Fijo + movilidad imperfecta: \\(M/P\\) es endógena (reservas) para sostener \\(\\bar e\\).';
   }
 
   function draw() {
