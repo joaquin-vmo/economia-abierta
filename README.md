@@ -1,56 +1,36 @@
-# Laboratorio de Finanzas Internacionales
+# modelo_IS_LM
 
-Página web interactiva para docencia: **IS-LM-BP de economía abierta (Mundell–Fleming)** y
-**overshooting del tipo de cambio (Dornbusch)**. Pensada para el curso *Finanzas Internacionales*
-(Magíster en Análisis Económico). Todo corre en el navegador — sin servidor, sin instalación.
+Una página web para mover los modelos macro de economía abierta con el mouse, en vez de dibujarlos a mano.
 
-## Contenido
+**https://joaquin-vmo.github.io/modelo_IS_LM/**
 
-- **Pestaña IS-LM-BP.** Gráfico interactivo en el plano \(Y, i\) con las curvas IS, LM y BP.
-  Controles: régimen cambiario (flexible/fijo), política fiscal \(G\), oferta monetaria \(M/P\),
-  tasa internacional \(i^*\), movilidad de capital \(v\) (hasta movilidad perfecta), y los
-  parámetros estructurales \(c, m, b, x, k, h\). Botón **"Congelar"** para comparar el equilibrio
-  nuevo contra el inicial. Reproduce numéricamente la Ayudantía 4:
-  con \(c=\tfrac12, a=100, G=50, b=x=m=v=k=h=1, i^*=0, M/P=50\) da \(Y=100, i=50, e=0\);
-  con movilidad perfecta da \(Y=50, i=0, e=-100\).
+Tiene tres pestañas:
 
-- **Pestaña Overshooting.** Diagrama de fase \((e,p)\) con isoclinas y senda de silla, más las
-  trayectorias temporales de \(e, p, i\). Botón **▶ Animar shock** y un preset **"Precios
-  flexibles"** que muestra cómo desaparece la sobrerreacción.
+- **IS-LM-BP (Mundell–Fleming).** Subes el gasto público o la oferta de dinero y ves cómo se desplazan las curvas y adónde se va el equilibrio. Se puede elegir tipo de cambio fijo o flexible y regular la movilidad de capital, desde nula hasta perfecta. El botón *Congelar* deja el equilibrio anterior en pantalla para comparar.
+- **Overshooting (Dornbusch).** El diagrama de fase del tipo de cambio y los precios, con la senda de silla, más la animación de un shock monetario. Un preset con precios flexibles muestra que la sobrerreacción desaparece.
+- **Curva J / Marshall–Lerner.** Se mueven las elasticidades de exportaciones e importaciones y se ve si una depreciación termina mejorando o empeorando la balanza comercial, y cuánto demora.
 
-## Notación
+Los parámetros estructurales (propensión a consumir, sensibilidades, etc.) están en la sección *avanzado* de cada panel, por si se quiere replicar un ejercicio puntual.
 
-| IS | \(Y = c(Y-T) + a - b\,i + G + x\,e - m\,Y\) |
-| LM | \(M/P = k\,Y - h\,i\) |
-| BP | \(0 = x\,e - m\,Y + v\,(i - i^*)\) |
+## Cómo correrlo
 
-Dornbusch: \(\;\dot e = i - i^*\;\) (paridad descubierta), \(\;m-p=\phi y-\lambda i\;\),
-\(\;\dot p = \pi[\bar u + \delta(e-p) + \gamma y - \sigma i - y]\).
-
-## Publicar en GitHub Pages
-
-1. Crea un repositorio en GitHub y sube estos archivos (`index.html`, `styles.css`, `js/`, `.nojekyll`):
-   ```bash
-   git init
-   git add .
-   git commit -m "Laboratorio de finanzas internacionales"
-   git branch -M main
-   git remote add origin https://github.com/USUARIO/REPO.git
-   git push -u origin main
-   ```
-2. En GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**,
-   rama `main`, carpeta `/ (root)`.
-3. La página queda en `https://USUARIO.github.io/REPO/` en ~1 minuto.
-
-## Probar localmente
-
-Abre `index.html` directamente en el navegador, o sirve la carpeta:
+No hay nada que instalar. Basta abrir el link de arriba, o clonar el repositorio y abrir `index.html` en el navegador:
 
 ```bash
-python3 -m http.server 8000   # luego abre http://localhost:8000
+git clone https://github.com/joaquin-vmo/modelo_IS_LM.git
 ```
 
-## Dependencias (vía CDN, sin instalación)
+Si el navegador bloquea algo al abrir el archivo directo, sirve la carpeta:
 
-- [Plotly.js](https://plotly.com/javascript/) — gráficos.
-- [MathJax](https://www.mathjax.org/) — ecuaciones.
+```bash
+python3 -m http.server 8000   # http://localhost:8000
+```
+
+Los gráficos usan [Plotly](https://plotly.com/javascript/) y las ecuaciones [MathJax](https://www.mathjax.org/), ambos cargados desde CDN.
+
+## Las ecuaciones
+
+$$IS:\quad Y = c(Y-T) + a - b\,i + G + x\,e - m\,Y$$
+$$LM:\quad M/P = k\,Y - h\,i \qquad BP:\quad 0 = x\,e - m\,Y + v\,(i - i^*)$$
+
+Dornbusch: $\dot e = i - i^*$ (paridad descubierta), $m - p = \phi y - \lambda i$, $\dot p = \pi[\bar u + \delta(e-p) + \gamma y - \sigma i - y]$.
