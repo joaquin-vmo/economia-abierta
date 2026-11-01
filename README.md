@@ -2,7 +2,7 @@
 
 Una página web para mover los modelos macro de economía abierta con el mouse, en vez de dibujarlos a mano.
 
-**https://joaquin-vmo.github.io/modelo_IS_LM/**
+**https://joaquin-vmo.github.io/economia-abierta/**
 
 Tiene tres pestañas:
 
@@ -17,7 +17,7 @@ Los parámetros estructurales (propensión a consumir, sensibilidades, etc.) est
 No hay nada que instalar. Basta abrir el link de arriba, o clonar el repositorio y abrir `index.html` en el navegador:
 
 ```bash
-git clone https://github.com/joaquin-vmo/modelo_IS_LM.git
+git clone https://github.com/joaquin-vmo/economia-abierta.git
 ```
 
 Si el navegador bloquea algo al abrir el archivo directo, sirve la carpeta:
