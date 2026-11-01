@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Laboratorio de Finanzas Internacionales — IS-LM abierto y Overshooting</title>
+<title>Modelos de Economía Abierta</title>
 <link rel="stylesheet" href="styles.css" />
 <script>
   window.MathJax = {
@@ -17,8 +17,7 @@
 <body>
 
 <header>
-  <h1>Laboratorio de Finanzas Internacionales</h1>
-  <p><span class="course">Finanzas Internacionales — Magíster en Análisis Económico</span></p>
+  <h1>Modelos de Economía Abierta</h1>
 </header>
 
 <nav class="tabs">
@@ -39,7 +38,6 @@
           <button data-r="flexible" class="active">Flexible</button>
           <button data-r="fijo">Fijo</button>
         </div>
-        <div class="hint" id="mf-regime-hint">Flexible: \(e\) se ajusta. Fijo: \(M/P\) (reservas) se ajusta.</div>
       </div>
 
       <div class="control">
@@ -83,15 +81,8 @@
         </div>
       </details>
 
-      <h3>Acciones</h3>
       <div class="btnrow">
         <button class="btn" id="mf-freeze">Congelar (comparar)</button>
-        <button class="btn" id="mf-clearfreeze">Quitar comparación</button>
-      </div>
-      <div class="btnrow">
-        <button class="btn" id="mf-preset-perf">Preset: Movilidad perfecta</button>
-      </div>
-      <div class="btnrow">
         <button class="btn primary" id="mf-reset">Reiniciar</button>
       </div>
     </div>
@@ -150,12 +141,8 @@
         </div>
       </details>
 
-      <h3>Acciones</h3>
       <div class="btnrow">
-        <button class="btn primary" id="os-play">▶ Animar shock</button>
-        <button class="btn" id="os-flex">Precios flexibles</button>
-      </div>
-      <div class="btnrow">
+        <button class="btn primary" id="os-play">Animar shock</button>
         <button class="btn" id="os-reset">Reiniciar</button>
       </div>
 
@@ -168,7 +155,7 @@
         <p>$$\dot p = \pi\big[\,\bar u + \delta(e-p) + \gamma y - \sigma i - y\,\big]$$</p>
       </div>
 
-      <div class="layout" style="grid-template-columns: 1fr 1fr; gap:16px">
+      <div>
         <div class="plotwrap"><div id="os-phase" class="plot"></div></div>
         <div class="plotwrap"><div id="os-time" class="plot"></div></div>
       </div>
@@ -204,16 +191,9 @@
         <input type="range" id="jc-tau" min="0.3" max="6" step="0.1" value="2.0" />
       </div>
 
-      <h3>Acciones</h3>
-      <div class="btnrow">
-        <button class="btn" id="jc-preset-ml">Preset: cumple ML</button>
-        <button class="btn" id="jc-preset-noml">Preset: no cumple ML</button>
-      </div>
       <div class="btnrow">
         <button class="btn primary" id="jc-reset">Reiniciar</button>
       </div>
-
-      <div class="note" id="jc-verdict" style="margin-top:16px"></div>
     </div>
 
     <div>
@@ -229,18 +209,15 @@
         <p>$$\Delta TB(t) \;\approx\; \big[\eta_x(t) + \eta_m(t) - 1\big]\, d, \qquad \eta_j(t)=\eta_j\big(1-e^{-t/\tau}\big)$$</p>
       </div>
 
-      <div class="layout" style="grid-template-columns: 1fr 1fr; gap:16px">
+      <div>
         <div class="plotwrap"><div id="jc-ml" class="plot"></div></div>
         <div class="plotwrap"><div id="jc-jcurve" class="plot"></div></div>
       </div>
-      <div class="note">Al impacto los volúmenes están fijos y la depreciación encarece las importaciones: la balanza <b>empeora</b>. Cuando las cantidades reaccionan, se recupera. Por esto una depreciación no mejora la balanza de inmediato (Ayudantía 4, inciso b).</div>
+      <div class="note">Al impacto los volúmenes están fijos y la depreciación encarece las importaciones: la balanza <b>empeora</b>. Cuando las cantidades reaccionan, se recupera. Por esto una depreciación no mejora la balanza de inmediato.</div>
     </div>
   </div>
 </section>
 
-<footer>
-  Material docente · notación y parámetros base de la Ayudantía 4.
-</footer>
 
 <script src="js/mundell-fleming.js"></script>
 <script src="js/overshooting.js"></script>

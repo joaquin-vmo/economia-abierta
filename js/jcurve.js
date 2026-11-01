@@ -37,17 +37,15 @@ const JC = (() => {
         line: { color: css('--accent-2'), width: 2.5, dash: 'dash' }, hoverinfo: 'skip' },
       // punto actual
       { x: [p.ex], y: [p.em], mode: 'markers+text', name: 'Tu economía',
-        text: ['  (η_x, η_m)'], textposition: 'top right', textfont: { color: '#fff' },
-        marker: { color: ml ? css('--bp') : css('--lm'), size: 15, line: { color: '#fff', width: 2 } },
+        text: ['  (η_x, η_m)'], textposition: 'top right', textfont: { color: '#000' },
+        marker: { color: ml ? css('--bp') : css('--lm'), size: 15, line: { color: '#000', width: 2 } },
         hovertemplate: `η_x=${p.ex.toFixed(2)}, η_m=${p.em.toFixed(2)}<br>suma=${(p.ex + p.em).toFixed(2)}<extra></extra>` }
     ];
     const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: '#cdd8e3' }, margin: { l: 50, r: 14, t: 30, b: 46 },
-      title: { text: 'Condición de Marshall–Lerner', font: { size: 13 } },
-      xaxis: { title: 'Elasticidad exportaciones  η_x', range: [0, MAX], gridcolor: '#2c3a49', zeroline: false },
-      yaxis: { title: 'Elasticidad importaciones  η_m', range: [0, MAX], gridcolor: '#2c3a49', zeroline: false },
-      showlegend: true, legend: { font: { size: 10 }, y: 1, x: 1, xanchor: 'right', bgcolor: 'rgba(20,28,38,0.6)' },
+      title: { text: 'Condición de Marshall–Lerner' },
+      xaxis: { title: 'Elasticidad exportaciones  η_x', range: [0, MAX], zeroline: false },
+      yaxis: { title: 'Elasticidad importaciones  η_m', range: [0, MAX], zeroline: false },
+      showlegend: true,
       annotations: [
         { x: 0.34, y: 0.34, text: 'empeora', showarrow: false, font: { color: css('--lm'), size: 12 } },
         { x: 2.1, y: 2.1, text: 'mejora', showarrow: false, font: { color: css('--bp'), size: 12 } }
@@ -79,13 +77,11 @@ const JC = (() => {
         marker: { color: css('--lm'), size: 11 }, hoverinfo: 'skip' }
     ];
     const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: '#cdd8e3' }, margin: { l: 56, r: 14, t: 30, b: 44 },
-      title: { text: 'Curva J: balanza comercial en el tiempo', font: { size: 13 } },
-      xaxis: { title: 'tiempo tras la depreciación', gridcolor: '#2c3a49', zeroline: false, range: [tPre, Tmax] },
-      yaxis: { title: 'Δ balanza comercial', gridcolor: '#2c3a49', zeroline: false },
-      showlegend: true, legend: { font: { size: 10 }, y: 0.02, x: 0.98, xanchor: 'right', yanchor: 'bottom', bgcolor: 'rgba(20,28,38,0.6)' },
-      shapes: [{ type: 'line', x0: 0, x1: 0, yref: 'paper', y0: 0, y1: 1, line: { color: '#fff', width: 1, dash: 'dot' } }]
+      title: { text: 'Curva J: balanza comercial en el tiempo' },
+      xaxis: { title: 'tiempo tras la depreciación', zeroline: false, range: [tPre, Tmax] },
+      yaxis: { title: 'Δ balanza comercial', zeroline: false },
+      showlegend: true,
+      shapes: [{ type: 'line', x0: 0, x1: 0, yref: 'paper', y0: 0, y1: 1, line: { color: '#000', width: 1, dash: 'dot' } }]
     };
     Plotly.react('jc-jcurve', traces, layout, { responsive: true, displayModeBar: false });
   }
@@ -103,10 +99,6 @@ const JC = (() => {
     $('jc-out-ml').style.color = ml ? css('--bp') : css('--lm');
     $('jc-out-impact').textContent = pct(impact);
     $('jc-out-lr').textContent = pct(lr);
-
-    $('jc-verdict').innerHTML = ml
-      ? `<b>η_x + η_m = ${sum.toFixed(2)} &gt; 1</b>: se cumple Marshall–Lerner. La depreciación <b>empeora</b> la balanza al impacto (${pct(impact)}) pero la <b>mejora</b> en el largo plazo (${pct(lr)}). Esa es la curva J.`
-      : `<b>η_x + η_m = ${sum.toFixed(2)} &lt; 1</b>: <span style="color:var(--lm)">no</span> se cumple Marshall–Lerner. La depreciación empeora la balanza incluso en el largo plazo: no hay curva J, solo deterioro.`;
   }
 
   function syncLabels() {
@@ -125,8 +117,6 @@ const JC = (() => {
     ['jc-d', 'jc-ex', 'jc-em', 'jc-tau'].forEach(id =>
       $(id).addEventListener('input', () => { syncLabels(); draw(); }));
     $('jc-reset').addEventListener('click', reset);
-    $('jc-preset-ml').addEventListener('click', () => { $('jc-ex').value = 1.1; $('jc-em').value = 0.9; syncLabels(); draw(); });
-    $('jc-preset-noml').addEventListener('click', () => { $('jc-ex').value = 0.4; $('jc-em').value = 0.3; syncLabels(); draw(); });
     syncLabels();
   }
 

@@ -1,4 +1,4 @@
-# modelo_IS_LM
+# Modelos de Economía Abierta
 
 Una página web para mover los modelos macro de economía abierta con el mouse, en vez de dibujarlos a mano.
 
@@ -7,10 +7,10 @@ Una página web para mover los modelos macro de economía abierta con el mouse, 
 Tiene tres pestañas:
 
 - **IS-LM-BP (Mundell–Fleming).** Subes el gasto público o la oferta de dinero y ves cómo se desplazan las curvas y adónde se va el equilibrio. Se puede elegir tipo de cambio fijo o flexible y regular la movilidad de capital, desde nula hasta perfecta. El botón *Congelar* deja el equilibrio anterior en pantalla para comparar.
-- **Overshooting (Dornbusch).** El diagrama de fase del tipo de cambio y los precios, con la senda de silla, más la animación de un shock monetario. Un preset con precios flexibles muestra que la sobrerreacción desaparece.
+- **Overshooting (Dornbusch).** El diagrama de fase del tipo de cambio y los precios, con la senda de silla, más la animación de un shock monetario. Con $\pi$ alto (precios flexibles) la sobrerreacción desaparece.
 - **Curva J / Marshall–Lerner.** Se mueven las elasticidades de exportaciones e importaciones y se ve si una depreciación termina mejorando o empeorando la balanza comercial, y cuánto demora.
 
-Los parámetros estructurales (propensión a consumir, sensibilidades, etc.) están en la sección *avanzado* de cada panel, por si se quiere replicar un ejercicio puntual.
+Los parámetros estructurales (propensión a consumir, sensibilidades, etc.) están en la sección *avanzado* de cada panel.
 
 ## Cómo correrlo
 

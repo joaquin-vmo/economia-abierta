@@ -105,25 +105,22 @@ const OS = (() => {
         line: { color: css('--accent-2'), width: 2.5, dash: 'dot' },
         marker: { size: 6, color: css('--accent-2') }, hoverinfo: 'skip' },
       { x: [M.eOld], y: [M.pOld], mode: 'markers+text', name: 'A (inicial)',
-        text: ['A'], textposition: 'bottom left', textfont: { color: '#fff' },
+        text: ['A'], textposition: 'bottom left', textfont: { color: '#000' },
         marker: { color: '#9fb0c0', size: 11 }, hoverinfo: 'skip' },
       { x: [M.e0], y: [M.pOld], mode: 'markers+text', name: 'B (overshoot)',
         text: ['B'], textposition: 'top right', textfont: { color: css('--accent-2') },
         marker: { color: css('--accent-2'), size: 12 }, hoverinfo: 'skip' },
       { x: [M.eNew], y: [M.pNew], mode: 'markers+text', name: "C (nuevo LP)",
-        text: ['C'], textposition: 'top right', textfont: { color: '#fff' },
-        marker: { color: '#ffffff', size: 12, line: { color: '#04101f', width: 2 } }, hoverinfo: 'skip' },
+        text: ['C'], textposition: 'top right', textfont: { color: '#000' },
+        marker: { color: '#000', size: 12, line: { color: '#000', width: 2 } }, hoverinfo: 'skip' },
       { x: [M.eOld], y: [M.pOld], mode: 'markers', name: '•', showlegend: false,
-        marker: { color: css('--accent'), size: 14, symbol: 'circle', line: { color: '#fff', width: 1 } }, hoverinfo: 'skip' }
+        marker: { color: css('--accent'), size: 14, symbol: 'circle', line: { color: '#000', width: 1 } }, hoverinfo: 'skip' }
     ];
 
     const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: '#cdd8e3' }, margin: { l: 50, r: 12, t: 28, b: 44 },
-      title: { text: 'Diagrama de fase (e, p)', font: { size: 13 } },
-      xaxis: { title: 'Tipo de cambio  e', gridcolor: '#2c3a49', range: [eMin, eMax], zeroline: false },
-      yaxis: { title: 'Nivel de precios  p', gridcolor: '#2c3a49', zeroline: false },
-      legend: { font: { size: 10 }, y: 1, x: 1, xanchor: 'right', bgcolor: 'rgba(20,28,38,0.6)' },
+      title: { text: 'Diagrama de fase (e, p)' },
+      xaxis: { title: 'Tipo de cambio  e', range: [eMin, eMax], zeroline: false },
+      yaxis: { title: 'Nivel de precios  p', zeroline: false },
       showlegend: true
     };
     Plotly.react('os-phase', traces, layout, { responsive: true, displayModeBar: false });
@@ -133,7 +130,7 @@ const OS = (() => {
   function drawTime(M, tr) {
     const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
     const mk = (y, col, yaxis) => ({ x: [tr.t[0]], y: [y[0]], xaxis: 'x', yaxis, mode: 'markers', showlegend: false,
-      marker: { color: col, size: 10, line: { color: '#fff', width: 1 } }, hoverinfo: 'skip' });
+      marker: { color: col, size: 10, line: { color: '#000', width: 1 } }, hoverinfo: 'skip' });
 
     const traces = [
       { x: tr.t, y: tr.e, xaxis: 'x', yaxis: 'y', mode: 'lines', name: 'e (tipo de cambio)',
@@ -154,16 +151,13 @@ const OS = (() => {
     ];
 
     const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: '#cdd8e3' }, margin: { l: 50, r: 12, t: 28, b: 40 },
-      title: { text: 'Trayectorias temporales', font: { size: 13 } },
-      legend: { orientation: 'h', y: 1.12, font: { size: 10 } },
-      xaxis: { gridcolor: '#2c3a49', zeroline: false, anchor: 'y3', domain: [0, 1], title: 'tiempo' },
-      yaxis: { gridcolor: '#2c3a49', title: 'e', domain: [0.7, 1] },
-      yaxis2: { gridcolor: '#2c3a49', title: 'p', domain: [0.37, 0.63] },
-      yaxis3: { gridcolor: '#2c3a49', title: 'i', domain: [0.04, 0.30] },
+      title: { text: 'Trayectorias temporales' },
+      xaxis: { zeroline: false, anchor: 'y3', domain: [0, 1], title: 'tiempo' },
+      yaxis: { title: 'e', domain: [0.7, 1] },
+      yaxis2: { title: 'p', domain: [0.37, 0.63] },
+      yaxis3: { title: 'i', domain: [0.04, 0.30] },
       shapes: [{ type: 'line', x0: 0, x1: 0, yref: 'paper', y0: 0, y1: 1,
-        line: { color: '#ffffff', width: 1, dash: 'dot' } }]
+        line: { color: '#000', width: 1, dash: 'dot' } }]
     };
     Plotly.react('os-time', traces, layout, { responsive: true, displayModeBar: false });
   }
@@ -228,7 +222,6 @@ const OS = (() => {
       .forEach(id => $(id).addEventListener('input', () => { syncLabels(); draw(); }));
     $('os-play').addEventListener('click', play);
     $('os-reset').addEventListener('click', reset);
-    $('os-flex').addEventListener('click', () => { $('os-pi').value = 8; syncLabels(); draw(); });
     syncLabels();
   }
 

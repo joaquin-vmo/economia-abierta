@@ -1,6 +1,5 @@
 /* ============================================================
    Mundell–Fleming  (IS-LM-BP economía abierta)
-   Notación de la Ayudantía 4:
      IS : Y = c(Y-T) + a - b i + G + x e - m Y
      LM : M/P = k Y - h i
      BP : 0 = x e - m Y + v (i - i*)
@@ -104,21 +103,17 @@ const MF = (() => {
 
     traces.push({
       x: [eq.Y], y: [eq.i], mode: 'markers+text', name: 'Equilibrio',
-      text: ['  E'], textposition: 'top right', textfont: { color: '#fff', size: 14 },
-      marker: { color: '#ffffff', size: 12, line: { color: '#04101f', width: 2 } },
+      text: ['  E'], textposition: 'top right', textfont: { color: '#000', size: 14 },
+      marker: { color: '#000', size: 12, line: { color: '#000', width: 2 } },
       hovertemplate: `E: Y=${fmt(eq.Y)}, i=${fmt(eq.i)}, e=${fmt(eq.e)}<extra></extra>`
     });
 
     const layout = {
-      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: '#cdd8e3' },
-      margin: { l: 55, r: 18, t: 10, b: 48 },
-      xaxis: { title: 'Producto  Y', gridcolor: '#2c3a49', zeroline: false, range: [0, XMAX], autorange: false },
-      yaxis: { title: 'Tasa de interés  i', gridcolor: '#2c3a49', zeroline: true, zerolinecolor: '#3a4a5a', range: [YMIN, YMAX], autorange: false },
-      legend: { orientation: 'h', y: 1.08, x: 0, font: { size: 12 } },
+      xaxis: { title: 'Producto  Y', zeroline: false, range: [0, XMAX], autorange: false },
+      yaxis: { title: 'Tasa de interés  i', zeroline: true, range: [YMIN, YMAX], autorange: false },
       shapes: [
-        { type: 'line', x0: eq.Y, x1: eq.Y, y0: 0, y1: eq.i, line: { color: '#ffffff', width: 1, dash: 'dot' } },
-        { type: 'line', x0: 0, x1: eq.Y, y0: eq.i, y1: eq.i, line: { color: '#ffffff', width: 1, dash: 'dot' } }
+        { type: 'line', x0: eq.Y, x1: eq.Y, y0: 0, y1: eq.i, line: { color: '#000', width: 1, dash: 'dot' } },
+        { type: 'line', x0: 0, x1: eq.Y, y0: eq.i, y1: eq.i, line: { color: '#000', width: 1, dash: 'dot' } }
       ]
     };
 
@@ -138,13 +133,12 @@ const MF = (() => {
     if (note !== lastNote) { lastNote = note; $('mf-note').innerHTML = note; typeset([$('mf-note'), $('mf-out-4k')]); }
   }
 
-  function freeze() {
-    const p = readParams(), eq = solve(p);
-    const c = curves(p, eq, XMAX);
-    frozen = { ...c, eq };
+  function toggleFreeze() {
+    if (frozen) frozen = null;
+    else { const p = readParams(), eq = solve(p); frozen = { ...curves(p, eq, XMAX), eq }; }
+    $('mf-freeze').textContent = frozen ? 'Quitar comparación' : 'Congelar (comparar)';
     draw();
   }
-  function clearFreeze() { frozen = null; draw(); }
 
   function setRegime(r) {
     document.querySelectorAll('#mf-regime button').forEach(b => b.classList.toggle('active', b.dataset.r === r));
@@ -167,7 +161,7 @@ const MF = (() => {
 
   function reset() {
     document.querySelectorAll('#view-mf input').forEach(el => { el.value = el.defaultValue; el.checked = el.defaultChecked; });
-    frozen = null; syncLabels(); setRegime('flexible');
+    frozen = null; $('mf-freeze').textContent = 'Congelar (comparar)'; syncLabels(); setRegime('flexible');
   }
 
   function init() {
@@ -175,10 +169,8 @@ const MF = (() => {
       .forEach(id => $(id).addEventListener('input', () => { syncLabels(); draw(); }));
     $('mf-perfect').addEventListener('change', () => { syncLabels(); draw(); });
     document.querySelectorAll('#mf-regime button').forEach(b => b.addEventListener('click', () => setRegime(b.dataset.r)));
-    $('mf-freeze').addEventListener('click', freeze);
-    $('mf-clearfreeze').addEventListener('click', clearFreeze);
+    $('mf-freeze').addEventListener('click', toggleFreeze);
     $('mf-reset').addEventListener('click', reset);
-    $('mf-preset-perf').addEventListener('click', () => { reset(); $('mf-perfect').checked = true; syncLabels(); draw(); });
     syncLabels(); draw();
   }
 
