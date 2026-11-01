@@ -107,11 +107,6 @@ const JC = (() => {
     $('jc-verdict').innerHTML = ml
       ? `<b>η_x + η_m = ${sum.toFixed(2)} &gt; 1</b>: se cumple Marshall–Lerner. La depreciación <b>empeora</b> la balanza al impacto (${pct(impact)}) pero la <b>mejora</b> en el largo plazo (${pct(lr)}). Esa es la curva J.`
       : `<b>η_x + η_m = ${sum.toFixed(2)} &lt; 1</b>: <span style="color:var(--lm)">no</span> se cumple Marshall–Lerner. La depreciación empeora la balanza incluso en el largo plazo: no hay curva J, solo deterioro.`;
-
-    $('jc-note').innerHTML =
-      'Al impacto los volúmenes están fijos y la depreciación encarece las importaciones: la balanza <b>empeora</b>. ' +
-      'Cuando las cantidades reaccionan, se recupera. Por esto una depreciación no mejora la balanza de inmediato (Ayudantía 4, inciso b).';
-    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([$('jc-verdict'), $('jc-note')]);
   }
 
   function syncLabels() {
@@ -122,7 +117,7 @@ const JC = (() => {
   }
 
   function reset() {
-    $('jc-d').value = 0.1; $('jc-ex').value = 0.8; $('jc-em').value = 0.6; $('jc-tau').value = 2.0;
+    document.querySelectorAll('#view-jc input').forEach(el => { el.value = el.defaultValue; });
     syncLabels(); draw();
   }
 
@@ -135,5 +130,5 @@ const JC = (() => {
     syncLabels();
   }
 
-  return { init, draw, redraw: draw };
+  return { init, draw };
 })();

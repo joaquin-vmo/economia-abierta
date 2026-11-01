@@ -7,13 +7,14 @@
    ============================================================ */
 
 const MF = (() => {
-  const DEF = { c:0.5, m:0.5, b:1, x:1, k:1, h:1, a:100, T:0,
-                G:50, M:50, ebar:0, istar:0, v:1, regime:'flexible', perfect:false };
+  const DEF = { a:100, T:0 };   // el resto de los valores base está en los sliders del HTML
   // Ejes fijos: así los desplazamientos de las curvas se ven, no se "compensan"
   const XMAX = 250, YMIN = -20, YMAX = 150;
-  let frozen = null;
+  let frozen = null, lastNote = null, lastFlex = null;
+  const typeset = els => window.MathJax && MathJax.typesetPromise && MathJax.typesetPromise(els);
 
   const $ = id => document.getElementById(id);
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
   function readParams() {
     const perfect = $('mf-perfect').checked;
@@ -67,7 +68,7 @@ const MF = (() => {
 
   function fmt(z) { return (Math.abs(z) < 1e-6 ? 0 : z).toFixed(1); }
 
-  function explain(p, eq) {
+  function explain(p) {
     const hi = p.perfect || p.v >= 12;
     if (p.regime === 'flexible') {
       if (hi) return 'Flexible + movilidad alta: la política <b>monetaria es efectiva</b>; la <b>fiscal se anula</b> por apreciación.';
@@ -88,9 +89,9 @@ const MF = (() => {
     });
 
     const traces = [
-      T(c.Y, c.is, 'IS', getComputedStyle(document.documentElement).getPropertyValue('--is').trim()),
-      T(c.Y, c.lm, 'LM', getComputedStyle(document.documentElement).getPropertyValue('--lm').trim()),
-      T(c.Y, c.bp, 'BP', getComputedStyle(document.documentElement).getPropertyValue('--bp').trim())
+      T(c.Y, c.is, 'IS', css('--is')),
+      T(c.Y, c.lm, 'LM', css('--lm')),
+      T(c.Y, c.bp, 'BP', css('--bp'))
     ];
 
     if (frozen) {
@@ -128,11 +129,13 @@ const MF = (() => {
     $('mf-out-i').textContent = fmt(eq.i);
     $('mf-out-e').textContent = fmt(eq.e);
     $('mf-out-xn').textContent = fmt(eq.xn);
-    if (p.regime === 'flexible') { $('mf-out-4k').innerHTML = 'Oferta \\(M/P\\)'; $('mf-out-4v').textContent = fmt(eq.M) + ' (exóg.)'; }
-    else { $('mf-out-4k').innerHTML = 'Reservas \\(\\Rightarrow M/P\\)'; $('mf-out-4v').textContent = fmt(eq.M) + ' (endóg.)'; }
+    const flex = p.regime === 'flexible';
+    $('mf-out-4v').textContent = fmt(eq.M) + (flex ? ' (exóg.)' : ' (endóg.)');
+    if (flex !== lastFlex) { lastFlex = flex; $('mf-out-4k').innerHTML = flex ? 'Oferta \\(M/P\\)' : 'Reservas \\(\\Rightarrow M/P\\)'; lastNote = null; }
 
-    $('mf-note').innerHTML = explain(p, eq);
-    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([$('mf-note'), $('mf-out-4k')]);
+    // re-tipografiar sólo si el texto cambió (antes: en cada movimiento de slider)
+    const note = explain(p);
+    if (note !== lastNote) { lastNote = note; $('mf-note').innerHTML = note; typeset([$('mf-note'), $('mf-out-4k')]); }
   }
 
   function freeze() {
@@ -163,11 +166,8 @@ const MF = (() => {
   function ParseFix(id, d) { return (+$(id).value).toFixed(d === 1 ? 1 : 2); }
 
   function reset() {
-    $('mf-G').value = 50; $('mf-M').value = 50; $('mf-ebar').value = 0; $('mf-istar').value = 0;
-    $('mf-v').value = 0; $('mf-perfect').checked = false;
-    $('mf-c').value = 0.5; $('mf-m').value = 0.5; $('mf-b').value = 1; $('mf-x').value = 1;
-    $('mf-k').value = 1; $('mf-h').value = 1;
-    frozen = null; setRegime('flexible'); syncLabels(); draw();
+    document.querySelectorAll('#view-mf input').forEach(el => { el.value = el.defaultValue; el.checked = el.defaultChecked; });
+    frozen = null; syncLabels(); setRegime('flexible');
   }
 
   function init() {
@@ -178,10 +178,9 @@ const MF = (() => {
     $('mf-freeze').addEventListener('click', freeze);
     $('mf-clearfreeze').addEventListener('click', clearFreeze);
     $('mf-reset').addEventListener('click', reset);
-    $('mf-preset-ayud').addEventListener('click', () => { reset(); });
     $('mf-preset-perf').addEventListener('click', () => { reset(); $('mf-perfect').checked = true; syncLabels(); draw(); });
     syncLabels(); draw();
   }
 
-  return { init, draw, redraw: draw };
+  return { init };
 })();

@@ -11,7 +11,6 @@
   --bp: #51cf66;
   --line: #2c3a49;
   --good: #51cf66;
-  --warn: #ffb454;
 }
 
 * { box-sizing: border-box; }
@@ -150,4 +149,3 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; font-we
 .eqbox p { margin: 8px 0; }
 
 footer { padding: 18px 28px 40px; color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--line); }
-footer a { color: var(--accent); }

@@ -12,7 +12,7 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<script src="https://cdn.plot.ly/plotly-basic-2.35.2.min.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -89,7 +89,6 @@
         <button class="btn" id="mf-clearfreeze">Quitar comparación</button>
       </div>
       <div class="btnrow">
-        <button class="btn" id="mf-preset-ayud">Preset: Ayudantía 4</button>
         <button class="btn" id="mf-preset-perf">Preset: Movilidad perfecta</button>
       </div>
       <div class="btnrow">
@@ -173,7 +172,7 @@
         <div class="plotwrap"><div id="os-phase" class="plot"></div></div>
         <div class="plotwrap"><div id="os-time" class="plot"></div></div>
       </div>
-      <div class="note" id="os-note"></div>
+      <div class="note">Como \(p\) es rígido, en \(t=0\) baja \(i\) y el tipo de cambio salta <b>por encima</b> de su nuevo nivel (A→B) para luego apreciarse hacia C: eso es el overshooting. Con precios flexibles (\(\pi\) alto) desaparece.</div>
     </div>
   </div>
 </section>
@@ -234,7 +233,7 @@
         <div class="plotwrap"><div id="jc-ml" class="plot"></div></div>
         <div class="plotwrap"><div id="jc-jcurve" class="plot"></div></div>
       </div>
-      <div class="note" id="jc-note"></div>
+      <div class="note">Al impacto los volúmenes están fijos y la depreciación encarece las importaciones: la balanza <b>empeora</b>. Cuando las cantidades reaccionan, se recupera. Por esto una depreciación no mejora la balanza de inmediato (Ayudantía 4, inciso b).</div>
     </div>
   </div>
 </section>

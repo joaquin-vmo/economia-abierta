@@ -21,9 +21,8 @@ const OS = (() => {
   }
 
   function model(p) {
-    const { lambda, pi, phi, delta, sigma, gamma, istar, ybar } = p;
+    const { lambda, pi, phi, delta, sigma, istar, ybar } = p;
     const pbar = m => m - phi * ybar + lambda * istar;          // p de largo plazo
-    const ubar = ybar * (1 - gamma) + sigma * istar - delta * Q0;
     const ebar = m => pbar(m) + Q0;                              // e de largo plazo
 
     // Jacobiano de (p_dot, e_dot) respecto a (p, e)
@@ -33,9 +32,7 @@ const OS = (() => {
     const tr = a11, det = -a12 * a21;
     const disc = Math.sqrt(tr * tr - 4 * det);
     const thetaS = (tr - disc) / 2;            // raíz estable (<0)
-    const thetaU = (tr + disc) / 2;            // raíz inestable (>0)
     const slopeS = lambda * thetaS;            // dp/de en el brazo estable (<0)
-    const slopeU = lambda * thetaU;            // dp/de en el brazo inestable (>0)
 
     const mNew = p.m0 + p.dm;
     const pOld = pbar(p.m0), pNew = pbar(mNew);
@@ -51,7 +48,7 @@ const OS = (() => {
     // trayectorias
     const Thalf = -Math.log(0.01) / Math.abs(thetaS);
     const T = Math.max(8, Thalf);
-    return { pbar, ebar, ubar, thetaS, thetaU, slopeS, slopeU,
+    return { thetaS, slopeS,
       mNew, pOld, pNew, eOld, eNew, e0, iOf, overshoot, lrJump, ratio, T, p };
   }
 
@@ -135,7 +132,7 @@ const OS = (() => {
 
   function drawTime(M, tr) {
     const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-    const mk = (col) => ({ x: [tr.t[0]], y: [tr.e[0]], mode: 'markers', showlegend: false,
+    const mk = (y, col, yaxis) => ({ x: [tr.t[0]], y: [y[0]], xaxis: 'x', yaxis, mode: 'markers', showlegend: false,
       marker: { color: col, size: 10, line: { color: '#fff', width: 1 } }, hoverinfo: 'skip' });
 
     const traces = [
@@ -153,11 +150,7 @@ const OS = (() => {
       { x: [tr.t[0], M.T], y: [M.p.istar, M.p.istar], xaxis: 'x', yaxis: 'y3', mode: 'lines', showlegend: false,
         line: { color: '#8a97a6', width: 1, dash: 'dot' }, hoverinfo: 'skip' },
       // marcadores animados (índices 6,7,8)
-      { ...mk(css('--accent')), yaxis: 'y' },
-      { x: [tr.t[0]], y: [tr.p[0]], xaxis: 'x', yaxis: 'y2', mode: 'markers', showlegend: false,
-        marker: { color: css('--lm'), size: 10, line: { color: '#fff', width: 1 } }, hoverinfo: 'skip' },
-      { x: [tr.t[0]], y: [tr.i[0]], xaxis: 'x', yaxis: 'y3', mode: 'markers', showlegend: false,
-        marker: { color: css('--bp'), size: 10, line: { color: '#fff', width: 1 } }, hoverinfo: 'skip' }
+      mk(tr.e, css('--accent'), 'y'), mk(tr.p, css('--lm'), 'y2'), mk(tr.i, css('--bp'), 'y3')
     ];
 
     const layout = {
@@ -180,9 +173,7 @@ const OS = (() => {
     const post = tr.t.findIndex(t => t >= 0);
     const idx = Math.min(tr.t.length - 1, post + Math.round(frac * (tr.t.length - 1 - post)));
     const e = tr.e[idx], p = tr.p[idx], i = tr.i[idx], t = tr.t[idx];
-    Plotly.restyle('os-time', { x: [[t]], y: [[e]] }, [6]);
-    Plotly.restyle('os-time', { x: [[t]], y: [[p]] }, [7]);
-    Plotly.restyle('os-time', { x: [[t]], y: [[i]] }, [8]);
+    Plotly.restyle('os-time', { x: [[t], [t], [t]], y: [[e], [p], [i]] }, [6, 7, 8]);
     Plotly.restyle('os-phase', { x: [[e]], y: [[p]] }, [8]);
   }
 
@@ -214,10 +205,6 @@ const OS = (() => {
       `<br>Razón <b>overshoot / LP = ${M.ratio.toFixed(2)}×</b> ` +
       (M.ratio > 1.05 ? '→ <span style="color:var(--accent-2)">el tipo de cambio se pasa de su nivel final</span>'
                       : '→ <span style="color:var(--good)">prácticamente sin sobrerreacción</span>');
-    $('os-note').innerHTML =
-      'Como \\(p\\) es rígido, en \\(t=0\\) baja \\(i\\) y el tipo de cambio salta <b>por encima</b> de su nuevo nivel (A→B) ' +
-      'para luego apreciarse hacia C: eso es el overshooting. Con precios flexibles (\\(\\pi\\) alto) desaparece.';
-    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([$('os-note'), $('os-metric')]);
   }
 
   function syncLabels() {
@@ -232,9 +219,7 @@ const OS = (() => {
   }
 
   function reset() {
-    $('os-dm').value = 0.05; $('os-lam').value = 1.0; $('os-pi').value = 0.25;
-    $('os-phi').value = 0.5; $('os-del').value = 0.5; $('os-sig').value = 0.3;
-    $('os-gam').value = 0.2; $('os-istar').value = 0.1;
+    document.querySelectorAll('#view-os input').forEach(el => { el.value = el.defaultValue; });
     syncLabels(); draw();
   }
 
@@ -247,5 +232,5 @@ const OS = (() => {
     syncLabels();
   }
 
-  return { init, draw, redraw: draw };
+  return { init, draw };
 })();
